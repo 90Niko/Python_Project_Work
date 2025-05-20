@@ -4,7 +4,7 @@
 
 {% block content %}
   <style>
-    form {
+    form.search-form {
       width: 90%;
       max-width: 800px;
       margin: 20px auto;
@@ -15,64 +15,227 @@
       align-items: center;
     }
 
-    input, select, button {
+    form.search-form input,
+    form.search-form select,
+    form.search-form button {
       padding: 10px;
       font-size: 1rem;
-      border: 1px solid #ccc;
+      border: 1px solid #B6B09F;
       border-radius: 5px;
     }
 
-    button {
-      background-color: #00aced;
-      color: white;
+    form.search-form button {
+      background-color: #B6B09F;
+      color: #000000;
       border: none;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
-    button:hover {
-      background-color: #008bbd;
+    form.search-form button:hover {
+      background-color: #000000;
+      color: #F2F2F2;
     }
 
     table {
       width: 90%;
-      max-width: 800px;
+      max-width: 900px;
       margin: 30px auto;
       border-collapse: collapse;
       font-family: Arial, sans-serif;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background-color: #F2F2F2;
     }
 
     th, td {
-      border: 1px solid #ddd;
+      border: 1px solid #B6B09F;
       padding: 12px 15px;
       text-align: center;
+      color: #000000;
     }
 
     th {
-      background-color: #00aced;
-      color: white;
+      background-color: #B6B09F;
+      color: #000000;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
 
     tr:nth-child(even) {
-      background-color: #f9f9f9;
+      background-color: #EAE4D5;
     }
 
     tr:hover {
-      background-color: #e1f5fe;
+      background-color: #B6B09F;
+      color: #F2F2F2;
     }
 
     caption {
       margin-bottom: 10px;
       font-size: 1.5rem;
       font-weight: bold;
-      color: #00aced;
+      color: #B6B09F;
     }
+
+    .action-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin: 0 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      border: 2px solid transparent;
+      display: inline-block;
+    }
+
+    .view-btn {
+      background-color: #B6B09F;
+      color: #000000;
+      border-color: #B6B09F;
+    }
+
+    .view-btn:hover {
+      background-color: #000000;
+      color: #F2F2F2;
+    }
+
+    .delete-btn {
+      background-color: #EAE4D5;
+      color: #B6B09F;
+      border-color: #B6B09F;
+    }
+
+    .delete-btn:hover {
+      background-color: #B6B09F;
+      color: #F2F2F2;
+    }
+
+    form.inline-form {
+      display: inline;
+    }
+
+   .pagination-fixed {
+  position: fixed;
+  bottom: 155px; /* distance above footer, adjust as you like */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 110;
+  font-family: Arial, sans-serif;
+}
+.pagination-fixed ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+}
+
+.pagination-fixed li {
+  padding: 6px 12px;
+  border: 1px solid #B6B09F;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-fixed li.active {
+  background-color: #B6B09F;
+  color: white;
+  font-weight: bold;
+}
+.pagination-fixed li:hover:not(.active) {
+  background-color: #ddd;
+}@media (max-width: 768px) {
+  form.search-form {
+    flex-direction: column;
+    align-items: stretch;
+    width: 95%;
+  }
+
+  form.search-form input,
+  form.search-form select,
+  form.search-form button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  table {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+  }
+
+  thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    display: none; /* Hide header row on very small screens */
+  }
+
+  tbody tr {
+    margin-bottom: 1rem;
+    border: 1px solid #B6B09F;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #F2F2F2;
+  }
+
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+  }
+
+  tbody td:last-child {
+    border-bottom: none;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #B6B09F;
+    flex-basis: 40%;
+  }
+
+  /* Adjust buttons inside actions */
+  .action-btn {
+    padding: 8px 14px;
+    font-size: 1rem;
+    margin: 4px 0;
+    width: 100%;
+  }
+
+  .pagination-fixed {
+    width: 90%;
+    left: 5%;
+    transform: none;
+    bottom: 20px;
+  }
+
+  .pagination-fixed ul {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .pagination-fixed li {
+    flex: 1 1 40px;
+    text-align: center;
+  }
+}
+
+
   </style>
 
   <!-- Search Form -->
-  <form method="get" action="">
+  <form class="search-form" method="get" action="">
     <input type="text" name="model" placeholder="Model" value="{{ request.args.get('model', '') }}">
     <input type="number" name="year" placeholder="Year" value="{{ request.args.get('year', '') }}">
     <input type="number" name="price_max" placeholder="Max Price" value="{{ request.args.get('price_max', '') }}">
@@ -93,6 +256,10 @@
         <th>Make</th>
         <th>Model</th>
         <th>Year</th>
+        <th>Color</th>
+        <th>Price</th>
+        <th>Mileage</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -102,13 +269,45 @@
             <td>{{ car.make }}</td>
             <td>{{ car.model }}</td>
             <td>{{ car.year }}</td>
+            <td>{{ car.color }}</td>
+            <td>{{ "{:,.0f}".format(car.price|float(default=0)).replace(",", ".") }} $</td>
+            <td>{{ "{:,.0f}".format(car.mileage|float(default=0)).replace(",", ".") }} km</td>
+            <td>
+              <form class="inline-form" method="get" action="{{ url_for('view_car', car_id=car.id) }}">
+                <button class="action-btn view-btn" type="submit">View</button>
+              </form>
+              <form class="inline-form" method="post" action="{{ url_for('delete_car', car_id=car.id) }}" onsubmit="return confirm('Are you sure you want to delete this car?');">
+                <button class="action-btn delete-btn" type="submit">Delete</button>
+              </form>
+            </td>
           </tr>
         {% endfor %}
       {% else %}
         <tr>
-          <td colspan="3">No cars found.</td>
+          <td colspan="7">No cars found.</td>
         </tr>
       {% endif %}
     </tbody>
   </table>
+
+  <!-- Pagination -->
+  <!-- Pagination -->
+<!-- Pagination Wrapper -->
+<div class="pagination-fixed">
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      {% if page > 1 %}
+        <li><a href="{{ url_for('all_cars', page=page-1) }}">Previous</a></li>
+      {% endif %}
+      {% for p in range(1, total_pages + 1) %}
+        <li class="{% if p == page %}active{% endif %}"><a href="{{ url_for('all_cars', page=p) }}">{{ p }}</a></li>
+      {% endfor %}
+      {% if page < total_pages %}
+        <li><a href="{{ url_for('all_cars', page=page+1) }}">Next</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+
+
 {% endblock %}

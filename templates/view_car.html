@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}View Car{% endblock %}
+
+{% block content %}
+  <h2>Car Details</h2>
+  <ul>
+    <li><strong>Make:</strong> {{ car.make }}</li>
+    <li><strong>Model:</strong> {{ car.model }}</li>
+    <li><strong>Year:</strong> {{ car.year }}</li>
+    <li><strong>Color:</strong> {{ car.color }}</li>
+    <li><strong>Price:</strong> {{ car.price }}</li>
+    <li><strong>Mileage:</strong> {{ car.mileage }}</li>
+  </ul>
+  <a href="{{ url_for('all_cars') }}">Back to Car List</a>
+{% endblock %}

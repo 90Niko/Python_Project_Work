@@ -44,17 +44,39 @@ def add_car():
 
 @app.route('/all_cars')
 def all_cars():
+    page = request.args.get('page', 1, type=int)
+    per_page = 8
+
     if not any(request.args.values()):
-        cars = car_service.get_random_cars(10)
+        all_cars_list = car_service.get_random_cars(50)  # Increase this if needed
     else:
         model = request.args.get('model')
         year = request.args.get('year', type=int)
         price_max = request.args.get('price_max', type=int)
         sort_by = request.args.get('sort_by')
 
-        cars = car_service.search_cars(year=year, model=model, price_max=price_max, sort_by=sort_by)
+        all_cars_list = car_service.search_cars(year=year, model=model, price_max=price_max, sort_by=sort_by)
 
-    return render_template('all_cars.html', cars=cars)
+    total = len(all_cars_list)
+    cars = all_cars_list[(page - 1) * per_page: page * per_page]
+    total_pages = (total + per_page - 1) // per_page
+
+    return render_template('all_cars.html', cars=cars, page=page, total_pages=total_pages, request=request)
+
+@app.route('/cars/view/<int:car_id>')
+def view_car(car_id):
+    car = car_service.get_car_by_id(car_id)
+    if not car:
+        abort(404)
+    return render_template('view_car.html', car=car)
+
+@app.route('/cars/delete/<int:car_id>', methods=['POST'])
+def delete_car(car_id):
+    success = car_service.delete_car_by_id(car_id)
+    if not success:
+        abort(404)
+    flash("Car deleted successfully!", "success")
+    return redirect(url_for('all_cars'))
 
 if __name__ == '__main__':
     app.run(debug=True)
