@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Home - My Flask Site{% endblock %}
+
+{% block content %}
+  <style>
+    .home-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      text-align: center;
+    }
+
+    .home-container h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #00aced;
+    }
+
+    .home-container p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #555;
+    }
+  </style>
+
+  <div class="home-container">
+    <h1>Welcome to My Flask App</h1>
+    <p>This is the home page.</p>
+  </div>
+{% endblock %}

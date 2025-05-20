@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - My Flask Site{% endblock %}
+
+{% block content %}
+<style>
+  .about-container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #fdfdfd;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  .about-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+  }
+
+  .about-container h2 {
+    margin-top: 30px;
+    color: #007bff;
+  }
+
+  .about-container p {
+    margin-bottom: 20px;
+  }
+</style>
+
+<div class="about-container">
+  <h1>About Us</h1>
+
+  <p>Welcome to <strong>My Flask Site</strong>! We’re passionate about building web applications that are not only functional, but beautifully designed and user-friendly. Our team is dedicated to crafting simple, scalable, and effective tools to help users achieve their goals online.</p>
+
+  <h2>Our Mission</h2>
+  <p>Our mission is to simplify web development and provide intuitive solutions for developers and users alike. Whether it’s a small business, a personal project, or a full-scale enterprise, we aim to deliver tools and experiences that matter.</p>
+
+  <h2>Our Story</h2>
+  <p>Founded in 2023, My Flask Site started as a passion project and quickly grew into a full-fledged platform. Built on Flask and other modern web technologies, we strive to push the boundaries of what's possible with Python on the web.</p>
+
+  <h2>Meet the Team</h2>
+  <p>We’re a small but mighty team of developers, designers, and creators who love working with open-source tools and building things that make people’s lives easier.</p>
+
+</div>
+{% endblock %}

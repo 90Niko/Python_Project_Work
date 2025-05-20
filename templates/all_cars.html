@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Random Cars List{% endblock %}
+
+{% block content %}
+  <style>
+    form {
+      width: 90%;
+      max-width: 800px;
+      margin: 20px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input, select, button {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #00aced;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #008bbd;
+    }
+
+    table {
+      width: 90%;
+      max-width: 800px;
+      margin: 30px auto;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px 15px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #00aced;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #e1f5fe;
+    }
+
+    caption {
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00aced;
+    }
+  </style>
+
+  <!-- Search Form -->
+  <form method="get" action="">
+    <input type="text" name="model" placeholder="Model" value="{{ request.args.get('model', '') }}">
+    <input type="number" name="year" placeholder="Year" value="{{ request.args.get('year', '') }}">
+    <input type="number" name="price_max" placeholder="Max Price" value="{{ request.args.get('price_max', '') }}">
+    <select name="sort_by">
+      <option value="">Sort by</option>
+      <option value="year" {% if request.args.get('sort_by') == 'year' %}selected{% endif %}>Year</option>
+      <option value="price" {% if request.args.get('sort_by') == 'price' %}selected{% endif %}>Price</option>
+      <option value="mileage" {% if request.args.get('sort_by') == 'mileage' %}selected{% endif %}>Mileage</option>
+    </select>
+    <button type="submit">Search</button>
+  </form>
+
+  <!-- Car Table -->
+  <table>
+    <caption>Car Results</caption>
+    <thead>
+      <tr>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Year</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if cars %}
+        {% for car in cars %}
+          <tr>
+            <td>{{ car.make }}</td>
+            <td>{{ car.model }}</td>
+            <td>{{ car.year }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="3">No cars found.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+{% endblock %}
