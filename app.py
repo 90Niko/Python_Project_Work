@@ -70,10 +70,10 @@ def add_car():
 @app.route('/all_cars')
 def all_cars():
     page = request.args.get('page', 1, type=int)
-    per_page = 6
+    per_page = 8
 
     if not any(request.args.values()):
-        all_cars_list = car_service.get_random_cars(50)  # Or your logic
+        all_cars_list = car_service.get_all_cars()  # Or your logic
     else:
         model = request.args.get('model')
         year = request.args.get('year', type=int)

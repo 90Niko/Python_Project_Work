@@ -6,28 +6,27 @@ class CarService:
 
     def __init__(self):
         self.cars = [
-            {"id": next(self._id_counter), "make": "Toyota", "model": "Camry", "year": 2018, "color": "Red", "price": "15000", "mileage": "50000"},
-            {"id": next(self._id_counter), "make": "Honda", "model": "Civic", "year": 2019, "color": "Blue", "price": "16000", "mileage": "40000"},
-            {"id": next(self._id_counter), "make": "Ford", "model": "Focus", "year": 2020, "color": "Black", "price": "17000", "mileage": "30000"},
-            {"id": next(self._id_counter), "make": "Chevrolet", "model": "Malibu", "year": 2021, "color": "White", "price": "18000", "mileage": "20000"},
-            {"id": next(self._id_counter), "make": "Nissan", "model": "Altima", "year": 2022, "color": "Silver", "price": "19000", "mileage": "10000"},
-            {"id": next(self._id_counter), "make": "Hyundai", "model": "Elantra", "year": 2023, "color": "Green", "price": "20000", "mileage": "5000"},
-            {"id": next(self._id_counter), "make": "Kia", "model": "Optima", "year": 2024, "color": "Yellow", "price": "21000", "mileage": "0"},
-            {"id": next(self._id_counter), "make": "Volkswagen", "model": "Jetta", "year": 2025, "color": "Purple", "price": "22000", "mileage": "0"},
-            {"id": next(self._id_counter), "make": "Subaru", "model": "Impreza", "year": 2026, "color": "Pink", "price": "23000", "mileage": "0"},
-            {"id": next(self._id_counter), "make": "Mazda", "model": "3", "year": 2027, "color": "Orange", "price": "24000", "mileage": "0"},
-            {"id": next(self._id_counter), "make": "Chrysler", "model": "300", "year": 2028, "color": "Brown", "price": "25000", "mileage": "0"},
-            {"id": next(self._id_counter), "make": "Dodge", "model": "Charger", "year": 2029, "color": "Gray", "price": "26000", "mileage": "0"},
+            {"id": next(self._id_counter), "make": "Toyota", "model": "Camry", "year": 2018, "color": "Red", "price": "15000", "mileage": "50000", "image_url": "static/image/toyota.jpg"},
+            {"id": next(self._id_counter), "make": "Honda", "model": "Civic", "year": 2019, "color": "Blue", "price": "16000", "mileage": "40000", "image_url": "static/image/honda_civic.jpg"},
+            {"id": next(self._id_counter), "make": "Ford", "model": "Focus", "year": 2020, "color": "Black", "price": "17000", "mileage": "30000", "image_url": "static/image/ford_focus.jpg"},
+            {"id": next(self._id_counter), "make": "Chevrolet", "model": "Malibu", "year": 2021, "color": "White", "price": "18000", "mileage": "20000","image_url": "static/image/download.jpg"},
+            {"id": next(self._id_counter), "make": "Nissan", "model": "Altima", "year": 2022, "color": "Silver", "price": "19000", "mileage": "10000", "image_url": "static/image/nissan_altim.jpg"},
+            {"id": next(self._id_counter), "make": "Hyundai", "model": "Elantra", "year": 2023, "color": "Green", "price": "20000", "mileage": "5000", "image_url": "static/image/hyundai_elantra.jpg"},
+            {"id": next(self._id_counter), "make": "Kia", "model": "Optima", "year": 2024, "color": "Yellow", "price": "21000", "mileage": "0", "image_url": "static/image/kia_optima.jpg"},
+            {"id": next(self._id_counter), "make": "Volkswagen", "model": "Jetta", "year": 2025, "color": "Purple", "price": "22000", "mileage": "0", "image_url": "static/image/volkswagen_jetta.jpg"},
+            {"id": next(self._id_counter), "make": "Subaru", "model": "Impreza", "year": 2026, "color": "Silver", "price": "23000", "mileage": "0", "image_url": "static/image/subaru_impreza.jpg"},
+            {"id": next(self._id_counter), "make": "Mazda", "model": "3", "year": 2027, "color": "Orange", "price": "24000", "mileage": "0", "image_url": "static/image/mazda_3.jpg"},
+            {"id": next(self._id_counter), "make": "Chrysler", "model": "300", "year": 2028, "color": "Brown", "price": "25000", "mileage": "0", "image_url": "static/image/chrysler_300.jpg"},
+            {"id": next(self._id_counter), "make": "Dodge", "model": "Charger", "year": 2029, "color": "Green", "price": "26000", "mileage": "0", "image_url": "static/image/dodge_charger.jpg"},
         ]
-
-    def get_random_cars(self, count=10):
-        return random.sample(self.cars, min(count, len(self.cars)))
 
     def add_car(self, car):
         # Assign a new unique ID
         car["id"] = next(self._id_counter)
         self.cars.append(car)
 
+    def get_all_cars(self):
+        return self.cars
     def add_car_service(self, form_data):
         make = form_data.get('make', '').strip()
         model = form_data.get('model', '').strip()
