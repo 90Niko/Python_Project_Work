@@ -8,7 +8,7 @@
     text-align: center;
     font-size: 2rem;
     margin-top: 40px;
-    color: #000000; /* black */
+    color: #F2F2F2; /* black */
   }
 
   .container-car {
@@ -81,7 +81,7 @@
 
   .back-link:hover {
     text-decoration: underline;
-    color: #000000; /* black on hover */
+    color:#F2F2F2;
   }
 
   /* Responsive */
@@ -95,7 +95,7 @@
 
 <h1 class="h1-car">Add a New Car</h1>
 <div class="container-car">
-  <form class="cars" method="post">
+  <form class="cars" method="post" enctype="multipart/form-data">
     <div>
       <label for="make">Make:</label>
       <input type="text" id="make" name="make">
@@ -120,6 +120,10 @@
       <label for="mileage">Mileage:</label>
       <input type="text" id="mileage" name="mileage">
     </div>
+    <div>
+    <label for="image">Image:</label>
+    <input type="file" id="image" name="image" accept="image/*">
+  </div>
     <input type="submit" value="Add Car">
   </form>
 </div>

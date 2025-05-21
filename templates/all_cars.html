@@ -1,313 +1,249 @@
 {% extends "base.html" %}
 
-{% block title %}Random Cars List{% endblock %}
+{% block title %}Car Listings{% endblock %}
 
 {% block content %}
-  <style>
-    form.search-form {
-      width: 90%;
-      max-width: 800px;
-      margin: 20px auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      align-items: center;
-    }
 
-    form.search-form input,
-    form.search-form select,
-    form.search-form button {
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #B6B09F;
-      border-radius: 5px;
-    }
-
-    form.search-form button {
-      background-color: #B6B09F;
-      color: #000000;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    form.search-form button:hover {
-      background-color: #000000;
-      color: #F2F2F2;
-    }
-
-    table {
-      width: 90%;
-      max-width: 900px;
-      margin: 30px auto;
-      border-collapse: collapse;
-      font-family: Arial, sans-serif;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      background-color: #F2F2F2;
-    }
-
-    th, td {
-      border: 1px solid #B6B09F;
-      padding: 12px 15px;
-      text-align: center;
-      color: #000000;
-    }
-
-    th {
-      background-color: #B6B09F;
-      color: #000000;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    tr:nth-child(even) {
-      background-color: #EAE4D5;
-    }
-
-    tr:hover {
-      background-color: #B6B09F;
-      color: #F2F2F2;
-    }
-
-    caption {
-      margin-bottom: 10px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #B6B09F;
-    }
-
-    .action-btn {
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin: 0 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      border: 2px solid transparent;
-      display: inline-block;
-    }
-
-    .view-btn {
-      background-color: #B6B09F;
-      color: #000000;
-      border-color: #B6B09F;
-    }
-
-    .view-btn:hover {
-      background-color: #000000;
-      color: #F2F2F2;
-    }
-
-    .delete-btn {
-      background-color: #EAE4D5;
-      color: #B6B09F;
-      border-color: #B6B09F;
-    }
-
-    .delete-btn:hover {
-      background-color: #B6B09F;
-      color: #F2F2F2;
-    }
-
-    form.inline-form {
-      display: inline;
-    }
-
-   .pagination-fixed {
-  position: fixed;
-  bottom: 155px; /* distance above footer, adjust as you like */
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.85);
-  padding: 8px 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index: 110;
-  font-family: Arial, sans-serif;
-}
-.pagination-fixed ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 10px;
-}
-
-.pagination-fixed li {
-  padding: 6px 12px;
-  border: 1px solid #B6B09F;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.pagination-fixed li.active {
-  background-color: #B6B09F;
-  color: white;
-  font-weight: bold;
-}
-.pagination-fixed li:hover:not(.active) {
-  background-color: #ddd;
-}@media (max-width: 768px) {
-  form.search-form {
-    flex-direction: column;
-    align-items: stretch;
-    width: 95%;
-  }
-
-  form.search-form input,
-  form.search-form select,
-  form.search-form button {
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  table {
-    width: 100%;
-    overflow-x: auto;
-    display: block;
-  }
-
-  thead, tbody, th, td, tr {
-    display: block;
-  }
-
-  thead tr {
-    display: none; /* Hide header row on very small screens */
-  }
-
-  tbody tr {
-    margin-bottom: 1rem;
-    border: 1px solid #B6B09F;
-    border-radius: 8px;
-    padding: 10px;
-    background-color: #F2F2F2;
-  }
-
-  tbody td {
+<!-- ===== Styles ===== -->
+<style>
+  .search-form {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
     display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    text-align: left;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
   }
 
-  tbody td:last-child {
-    border-bottom: none;
-  }
-
-  tbody td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    color: #B6B09F;
-    flex-basis: 40%;
-  }
-
-  /* Adjust buttons inside actions */
-  .action-btn {
-    padding: 8px 14px;
+  .search-form input,
+  .search-form select,
+  .search-form button {
+    padding: 10px;
     font-size: 1rem;
-    margin: 4px 0;
+    border: 1px solid #B6B09F;
+    border-radius: 5px;
+  }
+
+  .search-form button {
+    background-color: #B6B09F;
+    color: #000000;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .search-form button:hover {
+    background-color: #000000;
+    color: #F2F2F2;
+  }
+
+  .car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 40px auto;
+  }
+
+  .car-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .car-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .car-card img {
     width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .car-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 16px 16px 8px 16px;
+    color: #B6B09F;
+  }
+
+  .car-detail {
+    font-size: 0.95rem;
+    margin: 4px 16px;
+    color: #333;
+    flex-grow: 1;
+  }
+
+  .card-actions {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    border-top: 1px solid #eee;
+    background-color: #F9F9F9;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+
+  .action-btn {
+    display: inline-block;
+    padding: 10px 40px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .view-btn {
+    background-color: #B6B09F;
+    color: #000;
+  }
+
+  .view-btn:hover {
+    background-color: #8a8572;
+    color: #fff;
+  }
+
+  .delete-btn {
+    background-color: #EAE4D5;
+    color: #B6B09F;
+  }
+
+  .delete-btn:hover {
+    background-color: #b6b09f;
+    color: #fff;
   }
 
   .pagination-fixed {
-    width: 90%;
-    left: 5%;
-    transform: none;
-    bottom: 20px;
+    position: fixed;
+    bottom: 155px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    z-index: 110;
   }
 
   .pagination-fixed ul {
-    flex-wrap: wrap;
-    gap: 6px;
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
   }
 
   .pagination-fixed li {
-    flex: 1 1 40px;
-    text-align: center;
+    padding: 6px 12px;
+    border: 1px solid #B6B09F;
+    border-radius: 4px;
+    background-color: #EAE4D5;
+    cursor: pointer;
   }
-}
 
+  .pagination-fixed li.active {
+    background-color: #B6B09F;
+    color: white;
+    font-weight: bold;
+  }
 
-  </style>
+  .pagination-fixed li:hover:not(.active) {
+    background-color: #ddd;
+  }
 
-  <!-- Search Form -->
-  <form class="search-form" method="get" action="">
-    <input type="text" name="model" placeholder="Model" value="{{ request.args.get('model', '') }}">
-    <input type="number" name="year" placeholder="Year" value="{{ request.args.get('year', '') }}">
-    <input type="number" name="price_max" placeholder="Max Price" value="{{ request.args.get('price_max', '') }}">
-    <select name="sort_by">
-      <option value="">Sort by</option>
-      <option value="year" {% if request.args.get('sort_by') == 'year' %}selected{% endif %}>Year</option>
-      <option value="price" {% if request.args.get('sort_by') == 'price' %}selected{% endif %}>Price</option>
-      <option value="mileage" {% if request.args.get('sort_by') == 'mileage' %}selected{% endif %}>Mileage</option>
-    </select>
-    <button type="submit">Search</button>
-  </form>
+  @media (max-width: 768px) {
+    .search-form {
+      flex-direction: column;
+      width: 95%;
+    }
 
-  <!-- Car Table -->
-  <table>
-    <caption>Car Results</caption>
-    <thead>
-      <tr>
-        <th>Make</th>
-        <th>Model</th>
-        <th>Year</th>
-        <th>Color</th>
-        <th>Price</th>
-        <th>Mileage</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if cars %}
-        {% for car in cars %}
-          <tr>
-            <td>{{ car.make }}</td>
-            <td>{{ car.model }}</td>
-            <td>{{ car.year }}</td>
-            <td>{{ car.color }}</td>
-            <td>{{ "{:,.0f}".format(car.price|float(default=0)).replace(",", ".") }} $</td>
-            <td>{{ "{:,.0f}".format(car.mileage|float(default=0)).replace(",", ".") }} km</td>
-            <td>
-              <form class="inline-form" method="get" action="{{ url_for('view_car', car_id=car.id) }}">
-                <button class="action-btn view-btn" type="submit">View</button>
-              </form>
-              <form class="inline-form" method="post" action="{{ url_for('delete_car', car_id=car.id) }}" onsubmit="return confirm('Are you sure you want to delete this car?');">
-                <button class="action-btn delete-btn" type="submit">Delete</button>
-              </form>
-            </td>
-          </tr>
-        {% endfor %}
-      {% else %}
-        <tr>
-          <td colspan="7">No cars found.</td>
-        </tr>
-      {% endif %}
-    </tbody>
-  </table>
+    .search-form input,
+    .search-form select,
+    .search-form button {
+      width: 100%;
+      box-sizing: border-box;
+    }
 
-  <!-- Pagination -->
-  <!-- Pagination -->
-<!-- Pagination Wrapper -->
+    .pagination-fixed {
+      width: 90%;
+      left: 5%;
+      transform: none;
+      bottom: 20px;
+    }
+
+    .pagination-fixed ul {
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pagination-fixed li {
+      flex: 1 1 40px;
+      text-align: center;
+    }
+  }
+</style>
+
+<!-- ===== Search Form ===== -->
+<form class="search-form" method="get" action="">
+  <input type="text" name="model" placeholder="Model" value="{{ request.args.get('model', '') }}">
+  <input type="number" name="year" placeholder="Year" value="{{ request.args.get('year', '') }}">
+  <input type="number" name="price_max" placeholder="Max Price" value="{{ request.args.get('price_max', '') }}">
+  <select name="sort_by">
+    <option value="">Sort by</option>
+    <option value="year" {% if request.args.get('sort_by') == 'year' %}selected{% endif %}>Year</option>
+    <option value="price" {% if request.args.get('sort_by') == 'price' %}selected{% endif %}>Price</option>
+    <option value="mileage" {% if request.args.get('sort_by') == 'mileage' %}selected{% endif %}>Mileage</option>
+  </select>
+  <button type="submit">Search</button>
+</form>
+
+<!-- ===== Car Cards ===== -->
+<div class="car-grid">
+  {% if cars %}
+    {% for car in cars %}
+      <div class="car-card">
+        {% if car.image_url %}
+          <img src="{{ car.image_url }}" alt="{{ car.make }} {{ car.model }}">
+        {% endif %}
+        <div class="car-title">{{ car.make }} {{ car.model }} ({{ car.year }})</div>
+        <div class="car-detail">Color: {{ car.color }}</div>
+        <div class="car-detail">Price: {{ "{:,.0f}".format(car.price|float(default=0)).replace(",", ".") }} $</div>
+        <div class="car-detail">Mileage: {{ "{:,.0f}".format(car.mileage|float(default=0)).replace(",", ".") }} km</div>
+        <div class="card-actions">
+          <form method="get" action="{{ url_for('view_car', car_id=car.id) }}">
+            <button class="action-btn view-btn" type="submit">View</button>
+          </form>
+          <form method="post" action="{{ url_for('delete_car', car_id=car.id) }}" onsubmit="return confirm('Are you sure you want to delete this car?');">
+            <button class="action-btn delete-btn" type="submit">Delete</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="text-align: center; color: #B6B09F; font-size: 1.2rem;">No cars found.</p>
+  {% endif %}
+</div>
+
+<!-- ===== Pagination ===== -->
 <div class="pagination-fixed">
   <nav aria-label="Page navigation">
     <ul class="pagination">
-      {% if page > 1 %}
-        <li><a href="{{ url_for('all_cars', page=page-1) }}">Previous</a></li>
-      {% endif %}
       {% for p in range(1, total_pages + 1) %}
-        <li class="{% if p == page %}active{% endif %}"><a href="{{ url_for('all_cars', page=p) }}">{{ p }}</a></li>
+        <li class="{% if p == page %}active{% endif %}">
+          <a href="{{ url_for('all_cars', page=p) }}">{{ p }}</a>
+        </li>
       {% endfor %}
-      {% if page < total_pages %}
-        <li><a href="{{ url_for('all_cars', page=page+1) }}">Next</a></li>
-      {% endif %}
     </ul>
   </nav>
 </div>
-
 
 {% endblock %}

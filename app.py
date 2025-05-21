@@ -1,10 +1,20 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
-from services.car_service import CarService  # Make sure this file exists in a `services/` folder
+import os
+from flask import Flask, render_template, request, flash, redirect, url_for, abort
+from werkzeug.utils import secure_filename
+from services.car_service import CarService  # Assuming you have this service
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key'  # Replace with a secure value in production
+app.secret_key = 'your-secret-key'  # Replace with a secure key in production
+
+UPLOAD_FOLDER = os.path.join('static', 'image')
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 car_service = CarService()
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
 def home():
@@ -24,7 +34,7 @@ def contact():
         name = request.form.get('name')
         email = request.form.get('email')
         message = request.form.get('message')
-        # You can implement sending emails or saving to a DB here
+        # Implement sending email or save message here
         flash(f'Thank you, {name}! Your message has been received.', 'success')
         return redirect(url_for('contact'))
     return render_template('contact.html')
@@ -32,7 +42,22 @@ def contact():
 @app.route('/add_car', methods=['GET', 'POST'])
 def add_car():
     if request.method == 'POST':
-        success, message = car_service.add_car_service(request.form)
+        form_data = request.form.to_dict()
+
+        # Handle file upload
+        file = request.files.get('image')
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            # Ensure the upload folder exists
+            if not os.path.exists(app.config['UPLOAD_FOLDER']):
+                os.makedirs(app.config['UPLOAD_FOLDER'])
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+
+            # Save the relative image URL for display (for example: /static/image/filename.jpg)
+            form_data['image_url'] = '/' + filepath.replace('\\', '/')
+
+        success, message = car_service.add_car_service(form_data)
 
         if success:
             flash(message, 'success')
@@ -45,10 +70,10 @@ def add_car():
 @app.route('/all_cars')
 def all_cars():
     page = request.args.get('page', 1, type=int)
-    per_page = 8
+    per_page = 6
 
     if not any(request.args.values()):
-        all_cars_list = car_service.get_random_cars(50)  # Increase this if needed
+        all_cars_list = car_service.get_random_cars(50)  # Or your logic
     else:
         model = request.args.get('model')
         year = request.args.get('year', type=int)

@@ -35,6 +35,7 @@ class CarService:
         color = form_data.get('color', '').strip()
         price = form_data.get('price', '').strip()
         mileage = form_data.get('mileage', '').strip()
+        image_url = form_data.get('image_url', '').strip()
 
         if not make or not model or not year:
             return False, 'Please fill in all fields.'
@@ -49,6 +50,7 @@ class CarService:
             "color": color,
             "price": price,
             "mileage": mileage,
+            "image_url": image_url,
         }
 
         self.add_car(new_car)
