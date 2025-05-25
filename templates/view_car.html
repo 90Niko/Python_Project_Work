@@ -3,14 +3,91 @@
 {% block title %}View Car{% endblock %}
 
 {% block content %}
+<style>
+  .car-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 24px;
+    background-color: #EAE4D5; /* Hellbeige Hintergrund */
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    color: #000000; /* schwarzer Text */
+  }
+
+  .car-container h2 {
+    text-align: center;
+    color: #B6B09F; /* dunkleres Beige für Überschrift */
+  }
+
+  .car-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #B6B09F;
+  }
+
+  ul.car-details {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.car-details li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #000000; /* Schwarz für Details */
+  }
+
+  ul.car-details li strong {
+    color: #B6B09F;
+  }
+
+  button {
+    background-color: #B6B09F; /* beige-grauer Button */
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #000000; /* schwarzer Hover */
+    color: #F2F2F2; /* heller Text beim Hover */
+  }
+
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #B6B09F;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+    color: #000000;
+  }
+</style>
+<div class="car-container">
   <h2>Car Details</h2>
-  <ul>
+    <img src="{{ car.image_url }}?v={{ car.id }}" alt="Car Image" class="car-image">
+  <p>Image URL: {{ car.image_url }}</p>
+  <ul class="car-details">
     <li><strong>Make:</strong> {{ car.make }}</li>
     <li><strong>Model:</strong> {{ car.model }}</li>
     <li><strong>Year:</strong> {{ car.year }}</li>
     <li><strong>Color:</strong> {{ car.color }}</li>
-    <li><strong>Price:</strong> {{ car.price }}</li>
-    <li><strong>Mileage:</strong> {{ car.mileage }}</li>
+    <li><strong>Price:</strong> ${{ "{:,.2f}".format(car.price|float) }}</li>
+    <li><strong>Mileage:</strong> {{ car.mileage }} km</li>
   </ul>
-  <a href="{{ url_for('all_cars') }}">Back to Car List</a>
+  <form method="post" action="{{ url_for('add_to_favorites', car_id=car.id) }}">
+    <button type="submit">Add to Favorites ❤️</button>
+  </form>
+  <a href="{{ url_for('all_cars') }}" class="back-link">← Back to Car List</a>
+</div>
 {% endblock %}

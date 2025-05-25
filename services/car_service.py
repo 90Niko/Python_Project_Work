@@ -1,4 +1,3 @@
-import random
 import itertools
 
 class CarService:
@@ -19,6 +18,7 @@ class CarService:
             {"id": next(self._id_counter), "make": "Chrysler", "model": "300", "year": 2028, "color": "Brown", "price": "25000", "mileage": "0", "image_url": "static/image/chrysler_300.jpg"},
             {"id": next(self._id_counter), "make": "Dodge", "model": "Charger", "year": 2029, "color": "Green", "price": "26000", "mileage": "0", "image_url": "static/image/dodge_charger.jpg"},
         ]
+        self.favorites = set()
 
     def add_car(self, car):
         # Assign a new unique ID
@@ -27,6 +27,7 @@ class CarService:
 
     def get_all_cars(self):
         return self.cars
+
     def add_car_service(self, form_data):
         make = form_data.get('make', '').strip()
         model = form_data.get('model', '').strip()
@@ -75,17 +76,35 @@ class CarService:
 
         return results
 
-    # New: get a car by ID
+    # get a car by ID
     def get_car_by_id(self, car_id):
         for car in self.cars:
             if car["id"] == car_id:
                 return car
         return None
 
-    # New: delete a car by ID
+    # delete a car by ID
     def delete_car_by_id(self, car_id):
         for i, car in enumerate(self.cars):
             if car["id"] == car_id:
                 del self.cars[i]
                 return True
         return False
+
+    # Add a car to favorites
+    def add_to_favorites(self, car_id):
+        if self.get_car_by_id(car_id):
+            self.favorites.add(car_id)
+            return True, "Car added to favorites."
+        return False, "Car not found."
+
+    # Remove a car from favorites
+    def remove_from_favorites(self, car_id):
+        if car_id in self.favorites:
+            self.favorites.remove(car_id)
+            return True, "Car removed from favorites."
+        return False, "Car not in favorites."
+
+    # Get all favorite cars
+    def get_favorite_cars(self):
+        return [car for car in self.cars if car["id"] in self.favorites]

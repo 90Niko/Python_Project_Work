@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for, abort
 from werkzeug.utils import secure_filename
 from services.car_service import CarService  # Assuming you have this service
@@ -43,19 +44,14 @@ def contact():
 def add_car():
     if request.method == 'POST':
         form_data = request.form.to_dict()
-
-        # Handle file upload
         file = request.files.get('image')
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            # Ensure the upload folder exists
-            if not os.path.exists(app.config['UPLOAD_FOLDER']):
-                os.makedirs(app.config['UPLOAD_FOLDER'])
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
-
-            # Save the relative image URL for display (for example: /static/image/filename.jpg)
-            form_data['image_url'] = '/' + filepath.replace('\\', '/')
+            upload_folder = app.config['UPLOAD_FOLDER']
+            if not os.path.exists(upload_folder):
+                os.makedirs(upload_folder)
+            file.save(os.path.join(upload_folder, filename))
+            form_data['image_url'] = f'/static/image/{filename}'
 
         success, message = car_service.add_car_service(form_data)
 
@@ -66,6 +62,7 @@ def add_car():
             flash(message, 'error')
 
     return render_template('add_car.html')
+
 
 @app.route('/all_cars')
 def all_cars():
@@ -93,7 +90,8 @@ def view_car(car_id):
     car = car_service.get_car_by_id(car_id)
     if not car:
         abort(404)
-    return render_template('view_car.html', car=car)
+    timestamp = int(datetime.utcnow().timestamp())
+    return render_template('view_car.html', car=car, timestamp=timestamp)
 
 @app.route('/cars/delete/<int:car_id>', methods=['POST'])
 def delete_car(car_id):
@@ -102,6 +100,24 @@ def delete_car(car_id):
         abort(404)
     flash("Car deleted successfully!", "success")
     return redirect(url_for('all_cars'))
+
+@app.route('/favorite')
+def favorite():
+    favorite_cars = car_service.get_favorite_cars()
+    return render_template('favorite.html', favorite_cars=favorite_cars)
+
+@app.route('/add_to_favorites/<int:car_id>', methods=['POST'])
+def add_to_favorites(car_id):
+    success, message = car_service.add_to_favorites(car_id)
+    flash(message)
+    return redirect(url_for('favorite', car_id=car_id))
+
+
+@app.route('/remove_from_favorites/<int:car_id>', methods=['POST'])
+def remove_from_favorites(car_id):
+    success, message = car_service.remove_from_favorites(car_id)
+    flash(message)
+    return redirect(url_for('favorite'))
 
 if __name__ == '__main__':
     app.run(debug=True)

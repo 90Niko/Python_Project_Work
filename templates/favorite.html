@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}Favorite Cars{% endblock %}
+
+{% block content %}
+<style>
+  .container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: Arial, sans-serif;
+    background-color: #F2F2F2; /* Hellgrauer Hintergrund */
+    color: #000000; /* Schwarzer Text */
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 2.25rem;
+    margin-bottom: 1.5rem;
+    color: #B6B09F; /* Dunklerer Akzent */
+  }
+
+  .car-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .car-item {
+    display: flex;
+    align-items: center;
+    background: #EAE4D5; /* Hellbeiger Hintergrund */
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #B6B09F; /* dezenter Rahmen */
+  }
+
+  .car-image {
+    width: 160px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 1.5rem;
+    border: 1px solid #B6B09F; /* Rahmen passend zur Farbpalette */
+  }
+
+  .car-details {
+    flex: 1;
+  }
+
+  .car-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin: 0 0 0.4rem 0;
+    color: #000000; /* Schwarz für Titel */
+  }
+
+  .car-info {
+    color: #555; /* Grau für Details (könnte man auch anpassen) */
+    margin: 0.1rem 0;
+    font-size: 0.95rem;
+  }
+
+  .actions {
+    margin-top: 0.75rem;
+  }
+
+  .btn {
+    display: inline-block;
+    background-color: #B6B09F; /* Hauptbuttonfarbe */
+    color: #000000; /* schwarzer Text */
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn:hover {
+    background-color: #000000; /* Hover schwarz */
+    color: #F2F2F2; /* Text hell auf schwarz */
+  }
+
+  .btn-remove {
+    background-color: #000000; /* Entfernen-Button schwarz */
+    color: #F2F2F2; /* heller Text */
+    margin-right: 0.7rem;
+  }
+
+  .btn-remove:hover {
+    background-color: #B6B09F; /* Hover hellbeige */
+    color: #000000;
+  }
+
+  .no-favorites {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #B6B09F;
+    margin-top: 3rem;
+  }
+
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 2rem;
+    color: #B6B09F;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+    color: #000000;
+  }
+</style>
+
+<div class="container">
+  <h2>Your Favorite Cars ❤️</h2>
+
+  {% if favorite_cars %}
+    <ul class="car-list">
+      {% for car in favorite_cars %}
+        <li class="car-item">
+          <img src="{{ car.image_url }}" alt="{{ car.make }} {{ car.model }}" class="car-image">
+          <div class="car-details">
+            <p class="car-title">{{ car.year }} {{ car.make }} {{ car.model }}</p>
+            <p class="car-info">Color: {{ car.color }}</p>
+            <p class="car-info">Price: ${{ "{:,.2f}".format(car.price|float) }}</p>
+            <p class="car-info">Mileage: {{ car.mileage }} km</p>
+
+            <div class="actions">
+              <form method="post" action="{{ url_for('remove_from_favorites', car_id=car.id) }}" style="display:inline;">
+                <button type="submit" class="btn btn-remove">Remove ❌</button>
+              </form>
+
+              <a  class="btn">Buy Now</a>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="no-favorites">You have no favorite cars yet.</p>
+  {% endif %}
+
+  <a href="{{ url_for('all_cars') }}" class="back-link">← Back to Car List</a>
+</div>
+{% endblock %}
