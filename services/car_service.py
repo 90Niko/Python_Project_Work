@@ -3,6 +3,7 @@ import itertools
 class CarService:
     _id_counter = itertools.count(1)  # auto-incrementing ID generator
 
+    # Singleton pattern to ensure only one instance of CarService exists
     def __init__(self):
         self.cars = [
             {"id": next(self._id_counter), "make": "Toyota", "model": "Camry", "year": 2018, "color": "Red", "price": "15000", "mileage": "50000", "image_url": "static/image/toyota.jpg"},
@@ -20,14 +21,17 @@ class CarService:
         ]
         self.favorites = set()
 
+    # Add a new car to the service
     def add_car(self, car):
         # Assign a new unique ID
         car["id"] = next(self._id_counter)
         self.cars.append(car)
 
+    # Get all cars
     def get_all_cars(self):
         return self.cars
 
+    # Add a new car service
     def add_car_service(self, form_data):
         make = form_data.get('make', '').strip()
         model = form_data.get('model', '').strip()
@@ -56,6 +60,7 @@ class CarService:
         self.add_car(new_car)
         return True, 'Car added successfully!'
 
+    # Search cars based on criteria
     def search_cars(self, year=None, model=None, price_max=None, sort_by=None):
         results = self.cars
 

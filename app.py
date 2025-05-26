@@ -12,6 +12,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+# Initialize the car service
 car_service = CarService()
 
 def allowed_file(filename):
@@ -51,7 +52,7 @@ def add_car():
             if not os.path.exists(upload_folder):
                 os.makedirs(upload_folder)
             file.save(os.path.join(upload_folder, filename))
-            form_data['image_url'] = f'/static/image/{filename}'
+            form_data['image_url'] = f'static/image/{filename}'
 
         success, message = car_service.add_car_service(form_data)
 

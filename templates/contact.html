@@ -73,23 +73,5 @@
   </form>
 </div>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <script type="text/javascript">
-      $(document).ready(function() {
-        {% for category, msg in messages %}
-          toastr.options = {
-            "closeButton": true,
-            "progressBar": true,
-            "timeOut": "2000"
-          };
-          toastr.{{ category }}("{{ msg }}");
-        {% endfor %}
-        setTimeout(function() {
-          window.location.href = "{{ url_for('home') }}";
-        }, 2000);
-      });
-    </script>
-  {% endif %}
-{% endwith %}
+
 {% endblock %}

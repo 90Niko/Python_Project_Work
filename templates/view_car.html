@@ -75,7 +75,7 @@
 </style>
 <div class="car-container">
   <h2>Car Details</h2>
-    <img src="{{ car.image_url }}?v={{ car.id }}" alt="Car Image" class="car-image">
+    <img src="/{{ car.image_url }}?v={{ car.id }}" alt="Car Image" class="car-image">
   <p>Image URL: {{ car.image_url }}</p>
   <ul class="car-details">
     <li><strong>Make:</strong> {{ car.make }}</li>
