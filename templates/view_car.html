@@ -90,4 +90,11 @@
   </form>
   <a href="{{ url_for('all_cars') }}" class="back-link">← Back to Car List</a>
 </div>
+{% if request.args.get('redirect_after') %}
+  <script>
+    setTimeout(function() {
+      window.location.href = "{{ url_for('all_cars') }}";
+    }, 4000);
+  </script>
+{% endif %}
 {% endblock %}

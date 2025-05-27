@@ -58,7 +58,7 @@ def add_car():
 
         if success:
             flash(message, 'success')
-            return redirect(url_for('all_cars'))
+            return redirect(url_for('view_car', car_id=car_service.get_last_added_car_id(), redirect_after=1))
         else:
             flash(message, 'error')
 
@@ -91,8 +91,7 @@ def view_car(car_id):
     car = car_service.get_car_by_id(car_id)
     if not car:
         abort(404)
-    timestamp = int(datetime.utcnow().timestamp())
-    return render_template('view_car.html', car=car, timestamp=timestamp)
+    return render_template('view_car.html', car=car,)
 
 @app.route('/cars/delete/<int:car_id>', methods=['POST'])
 def delete_car(car_id):
@@ -105,19 +104,27 @@ def delete_car(car_id):
 @app.route('/favorite')
 def favorite():
     favorite_cars = car_service.get_favorite_cars()
+    if not favorite_cars:
+        flash("You have no favorite cars.", "info")
     return render_template('favorite.html', favorite_cars=favorite_cars)
 
 @app.route('/add_to_favorites/<int:car_id>', methods=['POST'])
 def add_to_favorites(car_id):
     success, message = car_service.add_to_favorites(car_id)
-    flash(message)
+    if not success:
+        flash(message, "error")
+    else:
+        flash("Car added to favorites.", "success" if success else "error")
     return redirect(url_for('favorite', car_id=car_id))
 
 
 @app.route('/remove_from_favorites/<int:car_id>', methods=['POST'])
 def remove_from_favorites(car_id):
     success, message = car_service.remove_from_favorites(car_id)
-    flash(message)
+    if not success:
+        flash(message, "error")
+    else:
+        flash("Car removed from favorites.", "success" if success else "error")
     return redirect(url_for('favorite'))
 
 if __name__ == '__main__':

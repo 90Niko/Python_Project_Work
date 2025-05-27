@@ -12,14 +12,17 @@
   }
 
   .container-car {
-    max-width: 500px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #F2F2F2; /* very light gray */
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(182, 176, 159, 0.3); /* subtle shadow in taupe */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: rgba(242, 242, 242, 0.7);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(182, 176, 159, 0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 
   .cars {
     display: flex;
@@ -127,6 +130,6 @@
     <input type="submit" value="Add Car">
   </form>
 </div>
-<a class="back-link" href="{{ url_for('index') }}">Back to Car List</a>
+<a class="back-link" href="{{ url_for('all_cars') }}">Back to Car List</a>
 
 {% endblock %}

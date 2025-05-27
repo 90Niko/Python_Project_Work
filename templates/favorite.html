@@ -5,13 +5,17 @@
 {% block content %}
 <style>
   .container {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    font-family: Arial, sans-serif;
-    background-color: #F2F2F2; /* Hellgrauer Hintergrund */
-    color: #000000; /* Schwarzer Text */
-  }
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: Arial, sans-serif;
+  background-color: rgba(242, 242, 242, 0.8); /* Halbtransparentes Grau */
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #000000;
+  border-radius: 16px; /* Optional: schönerer Look */
+}
+
 
   h2 {
     text-align: center;

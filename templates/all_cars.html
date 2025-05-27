@@ -50,6 +50,7 @@
 
   .car-card {
     background-color: #fff;
+
     border-radius: 12px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -128,13 +129,13 @@
     color: #fff;
   }
 
-  .pagination-fixed {
-    position: fixed;
-    bottom: 155px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 8px 16px;
-    z-index: 110;
+  .pagination-fixed nav {
+    position:  relative;
+    width: 100%;
+    max-width: 1200px;
+    margin:20px auto;
+    display: flex;
+    justify-content: center;
   }
 
   .pagination-fixed ul {
@@ -206,8 +207,9 @@
     <option value="price" {% if request.args.get('sort_by') == 'price' %}selected{% endif %}>Price</option>
     <option value="mileage" {% if request.args.get('sort_by') == 'mileage' %}selected{% endif %}>Mileage</option>
   </select>
-  <button type="submit">Search</button>
+   <button type="submit">Search</button>
 </form>
+
 
 <!-- ===== Car Cards ===== -->
 <div class="car-grid">

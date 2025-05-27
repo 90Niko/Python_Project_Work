@@ -1,0 +1,112 @@
+[
+  {
+    "make": "Toyota",
+    "model": "Camry",
+    "year": 2018,
+    "color": "Red",
+    "price": 15000,
+    "mileage": 50000,
+    "image_url": "static/image/toyota.jpg",
+    "id": 1
+  },
+  {
+    "make": "Honda",
+    "model": "Civic",
+    "year": 2019,
+    "color": "Blue",
+    "price": 16000,
+    "mileage": 40000,
+    "image_url": "static/image/honda_civic.jpg",
+    "id": 2
+  },
+  {
+    "make": "Ford",
+    "model": "Focus",
+    "year": 2020,
+    "color": "Black",
+    "price": 17000,
+    "mileage": 30000,
+    "image_url": "static/image/ford_focus.jpg",
+    "id": 3
+  },
+  {
+    "make": "Chevrolet",
+    "model": "Malibu",
+    "year": 2021,
+    "color": "White",
+    "price": 18000,
+    "mileage": 20000,
+    "image_url": "static/image/download.jpg",
+    "id": 4
+  },
+  {
+    "make": "Nissan",
+    "model": "Altima",
+    "year": 2022,
+    "color": "Silver",
+    "price": 19000,
+    "mileage": 10000,
+    "image_url": "static/image/nissan_altim.jpg",
+    "id": 5
+  },
+  {
+    "make": "Hyundai",
+    "model": "Elantra",
+    "year": 2023,
+    "color": "Green",
+    "price": 20000,
+    "mileage": 5000,
+    "image_url": "static/image/hyundai_elantra.jpg",
+    "id": 6
+  },
+  {
+    "make": "Kia",
+    "model": "Optima",
+    "year": 2024,
+    "color": "Yellow",
+    "price": 21000,
+    "mileage": 0,
+    "image_url": "static/image/kia_optima.jpg",
+    "id": 7
+  },
+  {
+    "make": "Volkswagen",
+    "model": "Jetta",
+    "year": 2025,
+    "color": "Purple",
+    "price": 22000,
+    "mileage": 0,
+    "image_url": "static/image/volkswagen_jetta.jpg",
+    "id": 8
+  },
+  {
+    "make": "Subaru",
+    "model": "Impreza",
+    "year": 2026,
+    "color": "Silver",
+    "price": 23000,
+    "mileage": 0,
+    "image_url": "static/image/subaru_impreza.jpg",
+    "id": 9
+  },
+  {
+    "make": "Mazda",
+    "model": "3",
+    "year": 2027,
+    "color": "Orange",
+    "price": 24000,
+    "mileage": 0,
+    "image_url": "static/image/mazda_3.jpg",
+    "id": 10
+  },
+  {
+    "make": "Chrysler",
+    "model": "300",
+    "year": 2028,
+    "color": "Brown",
+    "price": 25000,
+    "mileage": 0,
+    "image_url": "static/image/chrysler_300.jpg",
+    "id": 11
+  }
+]
