@@ -33,7 +33,7 @@
     "make": "Chevrolet",
     "model": "Malibu",
     "year": 2021,
-    "color": "White",
+    "color": "Silver",
     "price": 18000,
     "mileage": 20000,
     "image_url": "static/image/download.jpg",
@@ -43,7 +43,7 @@
     "make": "Nissan",
     "model": "Altima",
     "year": 2022,
-    "color": "Silver",
+    "color": "Black",
     "price": 19000,
     "mileage": 10000,
     "image_url": "static/image/nissan_altim.jpg",
@@ -53,7 +53,7 @@
     "make": "Hyundai",
     "model": "Elantra",
     "year": 2023,
-    "color": "Green",
+    "color": "Silver",
     "price": 20000,
     "mileage": 5000,
     "image_url": "static/image/hyundai_elantra.jpg",
@@ -73,7 +73,7 @@
     "make": "Volkswagen",
     "model": "Jetta",
     "year": 2025,
-    "color": "Purple",
+    "color": "Red",
     "price": 22000,
     "mileage": 0,
     "image_url": "static/image/volkswagen_jetta.jpg",
@@ -93,10 +93,10 @@
     "make": "Chrysler",
     "model": "300",
     "year": 2028,
-    "color": "Brown",
+    "color": "White",
     "price": 25000,
     "mileage": 0,
     "image_url": "static/image/chrysler_300.jpg",
-    "id": 11
+    "id": 10
   }
 ]
