@@ -127,5 +127,9 @@ def remove_from_favorites(car_id):
         flash("Car removed from favorites.", "success" if success else "error")
     return redirect(url_for('favorite'))
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error.html', error_code=404, message="Page not found"), 404
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -90,16 +90,6 @@
     "id": 9
   },
   {
-    "make": "Mazda",
-    "model": "3",
-    "year": 2027,
-    "color": "Orange",
-    "price": 24000,
-    "mileage": 0,
-    "image_url": "static/image/mazda_3.jpg",
-    "id": 10
-  },
-  {
     "make": "Chrysler",
     "model": "300",
     "year": 2028,

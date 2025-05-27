@@ -1,5 +1,4 @@
-import itertools
-import json
+import itertools,json,os
 from pathlib import Path
 from utils import validators
 
@@ -103,9 +102,23 @@ class CarService:
         return None
 
     # Delete a car by ID
+    import os
+
     def delete_car_by_id(self, car_id):
         for i, car in enumerate(self.cars):
             if car["id"] == car_id:
+                # Bild löschen, falls vorhanden
+                image_path = car.get("image_url")
+                if image_path:
+                    full_image_path = os.path.join(os.getcwd(), image_path)
+                    try:
+                        if os.path.exists(full_image_path):
+                            os.remove(full_image_path)
+                            print(f"Bild gelöscht: {full_image_path}")
+                    except Exception as e:
+                        print(f"Fehler beim Löschen des Bildes: {e}")
+
+                # Auto aus Liste entfernen
                 del self.cars[i]
                 self._save_cars_to_file()
                 return True
