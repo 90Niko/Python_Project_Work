@@ -221,8 +221,8 @@
         {% endif %}
         <div class="car-title">{{ car.make }} {{ car.model }} ({{ car.year }})</div>
         <div class="car-detail">Color: {{ car.color }}</div>
-        <div class="car-detail">Price: {{ "{:,.0f}".format(car.price|float(default=0)).replace(",", ".") }} $</div>
-        <div class="car-detail">Mileage: {{ "{:,.0f}".format(car.mileage|float(default=0)).replace(",", ".") }} km</div>
+        <div class="car-detail">Price: ${{ "{:,.0f}".format(car.price|float(default=0)).replace(",", ".") }}</div>
+        <div class="car-detail">Mileage: {{ "{:,.0f}".format(car.mileage|float(default=0)).replace(",", ".") }} mi</div>
         <div class="card-actions">
           <form method="get" action="{{ url_for('view_car', car_id=car.id) }}">
             <button class="action-btn view-btn" type="submit">View</button>

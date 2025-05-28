@@ -65,7 +65,7 @@
     "year": 2024,
     "color": "Yellow",
     "price": 21000,
-    "mileage": 0,
+    "mileage": 4500,
     "image_url": "static/image/kia_optima.jpg",
     "id": 7
   },
@@ -75,14 +75,14 @@
     "year": 2025,
     "color": "Red",
     "price": 22000,
-    "mileage": 0,
+    "mileage": 12300,
     "image_url": "static/image/volkswagen_jetta.jpg",
     "id": 8
   },
   {
     "make": "Subaru",
     "model": "Impreza",
-    "year": 2026,
+    "year": 2023,
     "color": "Silver",
     "price": 23000,
     "mileage": 0,
@@ -92,11 +92,31 @@
   {
     "make": "Chrysler",
     "model": "300",
-    "year": 2028,
+    "year": 2024,
     "color": "White",
     "price": 25000,
-    "mileage": 0,
+    "mileage": 12340,
     "image_url": "static/image/chrysler_300.jpg",
     "id": 10
+  },
+  {
+    "make": "Toyota",
+    "model": "Camry",
+    "year": 2018,
+    "color": "White",
+    "price": 17450,
+    "mileage": 62300,
+    "image_url": "static/image/toyota_camri.jpg",
+    "id": 11
+  },
+  {
+    "make": "Honda",
+    "model": "CR",
+    "year": 2020,
+    "color": "Black",
+    "price": 26750,
+    "mileage": 41500,
+    "image_url": "static/image/honda_cr_v.jpg",
+    "id": 12
   }
 ]

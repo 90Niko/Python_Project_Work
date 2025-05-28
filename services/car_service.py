@@ -1,8 +1,8 @@
-import itertools,json,os
+import itertools, json, os
 from pathlib import Path
 from utils import validators
 
-
+# CarService-Klasse zur Verwaltung von Autos
 class CarService:
     _id_counter = itertools.count(1)
     DATA_FILE = Path("data/cars_data.json")
@@ -11,34 +11,36 @@ class CarService:
         self.favorites = set()
         self.cars = self._load_initial_cars()
 
+    # Lade Anfangsautos aus der JSON-Datei
     def _load_initial_cars(self):
         if not self.DATA_FILE.exists():
             return []
 
+        # Lade Autos aus der JSON-Datei
         with self.DATA_FILE.open("r", encoding="utf-8") as f:
             car_list = json.load(f)
 
-        # Stelle sicher, dass jede geladene ID einzigartig ist
+        # Füge IDs zu den Autos hinzu, falls sie nicht vorhanden sind
         for car in car_list:
             car["id"] = next(self._id_counter)
         return car_list
 
+    # Speichere Autos in die JSON-Datei
     def _save_cars_to_file(self):
-        # Speichere Autos ohne die ID, wenn du willst
-        with self.DATA_FILE.open("w", encoding="utf-8") as f:
+     with self.DATA_FILE.open("w", encoding="utf-8") as f:
             json.dump(self.cars, f, indent=2, ensure_ascii=False)
 
-    # Add a new car to the service
+    # Füge ein neues Auto der Liste hinzu und speichere es in die Datei
     def add_car(self, car):
         car["id"] = next(self._id_counter)
         self.cars.append(car)
         self._save_cars_to_file()
 
-    # Get all cars
+    # Gib alle Autos zurück
     def get_all_cars(self):
         return self.cars
 
-    # Add a new car from form input
+    # Füge ein neues Auto über Formulardaten hinzu
     def add_car_service(self, form_data):
         make = form_data.get('make', '').strip()
         model = form_data.get('model', '').strip()
@@ -49,16 +51,16 @@ class CarService:
         image_url = form_data.get('image_url', '').strip()
 
         if not validators.validate_required_fields(make, model, year):
-            return False, 'Please fill in all required fields.'
+            return False, 'Bitte fülle alle Pflichtfelder aus.'
 
         if not validators.validate_year(year):
-            return False, 'Please enter a valid year.'
+            return False, 'Bitte gib ein gültiges Jahr ein.'
 
         if not validators.validate_price(price):
-            return False, 'Please enter a valid price.'
+            return False, 'Bitte gib einen gültigen Preis ein.'
 
         if not validators.validate_mileage(mileage):
-            return False, 'Please enter a valid mileage.'
+            return False, 'Bitte gib einen gültigen Kilometerstand ein.'
 
         new_car = {
             "make": make,
@@ -71,9 +73,9 @@ class CarService:
         }
 
         self.add_car(new_car)
-        return True, 'Car added successfully!'
+        return True, 'Auto erfolgreich hinzugefügt!'
 
-    # Search cars based on criteria
+    # Suche Autos anhand von Kriterien
     def search_cars(self, year=None, model=None, price_max=None, sort_by=None):
         results = self.cars
 
@@ -94,22 +96,21 @@ class CarService:
 
         return results
 
-    # Get a car by ID
+    # Hole ein Auto anhand der ID
     def get_car_by_id(self, car_id):
         for car in self.cars:
             if car["id"] == car_id:
                 return car
         return None
 
-    # Delete a car by ID
-    import os
-
+    # Lösche ein Auto anhand der ID
     def delete_car_by_id(self, car_id):
         for i, car in enumerate(self.cars):
             if car["id"] == car_id:
                 # Bild löschen, falls vorhanden
                 image_path = car.get("image_url")
                 if image_path:
+                    # Erstelle den vollständigen Pfad zum Bild basierend auf dem aktuellen Arbeitsverzeichnis
                     full_image_path = os.path.join(os.getcwd(), image_path)
                     try:
                         if os.path.exists(full_image_path):
@@ -118,32 +119,32 @@ class CarService:
                     except Exception as e:
                         print(f"Fehler beim Löschen des Bildes: {e}")
 
-                # Auto aus Liste entfernen
+                # Auto aus der Liste entfernen
                 del self.cars[i]
                 self._save_cars_to_file()
                 return True
         return False
 
-    # Add a car to favorites
+    # Füge ein Auto zu den Favoriten hinzu
     def add_to_favorites(self, car_id):
         if self.get_car_by_id(car_id):
             self.favorites.add(car_id)
-            return True, "Car added to favorites."
-        return False, "Car not found."
+            return True, "Auto zu Favoriten hinzugefügt."
+        return False, "Auto nicht gefunden."
 
-    # Remove a car from favorites
+    # Entferne ein Auto aus den Favoriten
     def remove_from_favorites(self, car_id):
         if car_id in self.favorites:
             self.favorites.remove(car_id)
-            return True, "Car removed from favorites."
-        return False, "Car not in favorites."
+            return True, "Auto aus Favoriten entfernt."
+        return False, "Auto nicht in Favoriten."
 
-    # Get the last added car ID
+    # Hole die ID des zuletzt hinzugefügten Autos
     def get_last_added_car_id(self):
         if self.cars:
             return self.cars[-1]["id"]
         return None
 
-    # Get all favorite cars
+    # Hole alle Favoriten-Autos
     def get_favorite_cars(self):
         return [car for car in self.cars if car["id"] in self.favorites]
