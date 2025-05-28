@@ -42,6 +42,8 @@ class CarService:
 
     # Füge ein neues Auto über Formulardaten hinzu
     def add_car_service(self, form_data):
+        errors = {}
+
         make = form_data.get('make', '').strip()
         model = form_data.get('model', '').strip()
         year = form_data.get('year', '').strip()
@@ -51,16 +53,24 @@ class CarService:
         image_url = form_data.get('image_url', '').strip()
 
         if not validators.validate_required_fields(make, model, year):
-            return False, 'Bitte fülle alle Pflichtfelder aus.'
+            if not make:
+                errors['make'] = 'Pflichtfeld'
+            if not model:
+                errors['model'] = 'Pflichtfeld'
+            if not year:
+                errors['year'] = 'Pflichtfeld'
 
-        if not validators.validate_year(year):
-            return False, 'Bitte gib ein gültiges Jahr ein.'
+        if year and not validators.validate_year(year):
+            errors['year'] = 'Ungültiges Jahr'
 
-        if not validators.validate_price(price):
-            return False, 'Bitte gib einen gültigen Preis ein.'
+        if price and not validators.validate_price(price):
+            errors['price'] = 'Ungültiger Preis'
 
-        if not validators.validate_mileage(mileage):
-            return False, 'Bitte gib einen gültigen Kilometerstand ein.'
+        if mileage and not validators.validate_mileage(mileage):
+            errors['mileage'] = 'Ungültiger Kilometerstand'
+
+        if errors:
+            return False, 'Bitte korrigiere die markierten Felder.', form_data, errors
 
         new_car = {
             "make": make,
@@ -73,7 +83,7 @@ class CarService:
         }
 
         self.add_car(new_car)
-        return True, 'Auto erfolgreich hinzugefügt!'
+        return True, 'Auto erfolgreich hinzugefügt!', None, None
 
     # Suche Autos anhand von Kriterien
     def search_cars(self, year=None, model=None, price_max=None, sort_by=None):

@@ -52,39 +52,31 @@ def contact():
         return redirect(url_for('contact'))
     return render_template('contact.html')
 
-
-# Neue Auto-Daten erfassen und speichern
+# Auto hinzufügen – Formular anzeigen und verarbeiten
 @app.route('/add_car', methods=['GET', 'POST'])
 def add_car():
     if request.method == 'POST':
         form_data = request.form.to_dict()
         file = request.files.get('image')
 
-        # Wenn eine Bilddatei hochgeladen wurde und erlaubt ist
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)  # Sicheren Dateinamen erstellen
+            filename = secure_filename(file.filename)
             upload_folder = app.config['UPLOAD_FOLDER']
-
-            # Upload-Ordner erstellen, falls er nicht existiert
             if not os.path.exists(upload_folder):
                 os.makedirs(upload_folder)
-
-            # Bild speichern
             file.save(os.path.join(upload_folder, filename))
-
-            # Pfad zum Bild im Formular-Daten-Dict speichern
             form_data['image_url'] = f'static/image/{filename}'
 
-        # Auto über CarService hinzufügen
-        success, message = car_service.add_car_service(form_data)
+        success, message, old_form_data, errors = car_service.add_car_service(form_data)
 
         if success:
             flash(message, 'success')
-            # Nach Hinzufügen auf Detailseite weiterleiten
             return redirect(url_for('view_car', car_id=car_service.get_last_added_car_id(), redirect_after=1))
         else:
             flash(message, 'error')
+            return render_template('add_car.html', form_data=old_form_data, errors=errors)
 
+    # GET request
     return render_template('add_car.html')
 
 
