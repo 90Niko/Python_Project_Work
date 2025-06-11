@@ -20,14 +20,27 @@ class CarService:
         with self.DATA_FILE.open("r", encoding="utf-8") as f:
             car_list = json.load(f)
 
-        # Füge IDs zu den Autos hinzu, falls sie nicht vorhanden sind
+        # Ermittle die höchste vorhandene ID
+        max_id = 0
         for car in car_list:
-            car["id"] = next(self._id_counter)
+            if "id" in car and isinstance(car["id"], int):
+                max_id = max(max_id, car["id"])
+
+        next_id = max_id + 1
+
+        # Vergib fehlende IDs sequential weiter
+        for car in car_list:
+            if "id" not in car or not isinstance(car["id"], int):
+                car["id"] = next_id
+                next_id += 1
+
+        # Setze den internen Zähler auf die nächste freie ID
+        self._id_counter = itertools.count(next_id)
         return car_list
 
     # Speichere Autos in die JSON-Datei
     def _save_cars_to_file(self):
-     with self.DATA_FILE.open("w", encoding="utf-8") as f:
+        with self.DATA_FILE.open("w", encoding="utf-8") as f:
             json.dump(self.cars, f, indent=2, ensure_ascii=False)
 
     # Füge ein neues Auto der Liste hinzu und speichere es in die Datei
